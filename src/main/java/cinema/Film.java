@@ -1,4 +1,4 @@
-package model;
+package cinema;
 
 public class Film {
 
@@ -38,6 +38,6 @@ public class Film {
     public void setTitre(String titre) {
         this.titre = titre;
     }
-    
+
 
 }

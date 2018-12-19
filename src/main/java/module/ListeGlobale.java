@@ -3,13 +3,13 @@ package module;
 import java.util.ArrayList;
 
 public class ListeGlobale {
-    private ArrayList<String[]> liste;
+    private ArrayList<Liste>  liste;
 
-    public ArrayList<String[]> getListe() {
+    public ArrayList<Liste> getListe() {
         return liste;
     }
 
-    public void setListe(ArrayList<String[]> liste) {
+    public void setListe(ArrayList<Liste> liste) {
         this.liste = liste;
     }
 }

@@ -2,6 +2,7 @@ package helloworld;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.owlike.genson.Genson;
 import module.ListeGlobale;
 
 import java.io.BufferedReader;
@@ -18,6 +19,8 @@ import java.util.StringJoiner;
 
 public class App implements RequestHandler<Object, Object> {
 
+    public Genson genson = new Genson();
+
     public Object handleRequest(final Object input, final Context context) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
@@ -25,7 +28,7 @@ public class App implements RequestHandler<Object, Object> {
         try {
             final String pageContents = this.getPageContents("https://raw.githubusercontent.com/theofidry/ephemeris/master/src/ephemeris.json");
             ListeGlobale listeGlobale = genson.deserialize(pageContents, ListeGlobale.class);
-            //String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);
+            String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);
             return new GatewayResponse(output, headers, 200);
         } catch (IOException e) {
             return new GatewayResponse("{}", headers, 500);

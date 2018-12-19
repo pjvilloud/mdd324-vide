@@ -4,7 +4,7 @@ public class Film {
 
     private String categorie;
     private String decription;
-    private String durée;
+    private String duree;
     private String titre;
 
     public String getCategorie() {
@@ -24,11 +24,11 @@ public class Film {
     }
 
     public String getDurée() {
-        return durée;
+        return duree;
     }
 
     public void setDurée(String durée) {
-        this.durée = durée;
+        this.duree = durée;
     }
 
     public String getTitre() {

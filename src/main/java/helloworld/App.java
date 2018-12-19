@@ -10,6 +10,8 @@ import java.util.StringJoiner;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import org.json.JSONObject;
+import org.json.XML;
 
 /**
  * Handler for requests to Lambda function.
@@ -21,7 +23,11 @@ public class App implements RequestHandler<Object, Object> {
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
         try {
-            final String pageContents = this.getPageContents("https://checkip.amazonaws.com");
+            final String pageContents = this.getPageContents("https://www.lemonde.fr/rss/une.xml");
+            JSONObject xmlJSONObj = XML.toJSONObject(pageContents);
+            String jsonPrettyPrintString = xmlJSONObj.toString(4);
+            System.out.println(xmlJSONObj.getJSONObject("rss").getJSONObject("channel").getJSONObject("image"));
+            /*System.out.println(jsonPrettyPrintString);*/
             String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);
             return new GatewayResponse(output, headers, 200);
         } catch (IOException e) {

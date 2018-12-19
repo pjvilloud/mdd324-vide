@@ -17,6 +17,13 @@
             <artifactId>aws-lambda-java-core</artifactId>
             <version>1.2.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20171018</version>
+        </dependency>
+
         <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>

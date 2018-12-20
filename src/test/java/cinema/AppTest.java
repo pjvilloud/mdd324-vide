@@ -1,7 +1,7 @@
 package cinema;
 
-import helloworld.App;
-import helloworld.GatewayResponse;
+import cinema.App;
+import cinema.GatewayResponse;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -15,8 +15,11 @@ public class AppTest {
     assertEquals(result.getHeaders().get("Content-Type"), "application/json");
     String content = result.getBody();
     assertNotNull(content);
-    assertTrue(content.contains("\"message\""));
-    assertTrue(content.contains("\"hello world\""));
-    assertTrue(content.contains("\"location\""));
+  }
+
+  @Test
+  public void correctlyFormattedData() {
+    App app = new App();
+    GatewayResponse result = (GatewayResponse) app.handleRequest( null, null);
   }
 }

@@ -3,9 +3,16 @@ package cinema;
 public class Film {
 
     private String categorie;
-    private String decription;
+    private String description;
     private String duree;
     private String titre;
+
+    public Film(String titre, String description, String categorie, String duree){
+        this.titre = titre;
+        this.description = description;
+        this.categorie = categorie;
+        this.duree = duree;
+    }
 
     public String getCategorie() {
         return categorie;
@@ -16,18 +23,18 @@ public class Film {
     }
 
     public String getDecription() {
-        return decription;
+        return description;
     }
 
     public void setDecription(String decription) {
-        this.decription = decription;
+        this.description = decription;
     }
 
-    public String getDurée() {
+    public String getDuree() {
         return duree;
     }
 
-    public void setDurée(String durée) {
+    public void setDuree(String durée) {
         this.duree = durée;
     }
 

@@ -9,6 +9,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
@@ -22,7 +23,13 @@ public class App implements RequestHandler<Object, Object> {
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
 
-        Rss rss = parseRssFromUrl( "http://rss.allocine.fr/ac/cine/cettesemaine?format=xml" );
+        Rss rss = null;
+
+        try {
+            rss = parseRssFromUrl( new URL("http://rss.allocine.fr/ac/cine/cettesemaine?format=xml") );
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
         List<Film> films = parseFilms(rss);
 

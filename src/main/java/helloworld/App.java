@@ -34,8 +34,47 @@ public class App implements RequestHandler<Object, Object> {
             ListeGlobale listeGlobale = genson.deserialize(pageContents, ListeGlobale.class);
             System.out.println(listeGlobale.getApril().get(0).get(0));
             //switch
-            String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);
-            return new GatewayResponse(output, headers, 200);
+            Integer moisNum = month();
+            List<List<String>> liste;
+            switch (moisNum){
+                case 0 :
+                    liste = listeGlobale.getJanuary();
+                    break;
+                case 1 :
+                    liste = listeGlobale.getFebruary();
+                    break;
+                case 2 :
+                    liste = listeGlobale.getMarch();
+                    break;
+                case 3 :
+                    liste = listeGlobale.getApril();
+                    break;
+                case 4 :
+                    liste = listeGlobale.getMay();
+                    break;
+                case 5 :
+                    liste = listeGlobale.getJune();
+                    break;
+                case 6 :
+                    liste = listeGlobale.getJuly();
+                    break;
+                case 7 :
+                    liste = listeGlobale.getAugust();
+                    break;
+                case 8 :
+                    liste = listeGlobale.getSeptember();
+                    break;
+                case 9 :
+                    liste = listeGlobale.getOctober();
+                    break;
+                case 10 :
+                    liste = listeGlobale.getNovember();
+                    break;
+                case 11 :
+                    liste = listeGlobale.getDecember();
+                    break;
+            }
+            return ephemeride;
         } catch (IOException e) {
             return new GatewayResponse("{}", headers, 500);
         }

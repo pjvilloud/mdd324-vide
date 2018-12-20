@@ -10,8 +10,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -21,7 +19,6 @@ import java.util.*;
 public class App implements RequestHandler<Object, Object> {
 
     private Genson genson = new Genson();
-    private Ephemeride ephemeride = new Ephemeride();
     private Date date = new Date(); // your date
 
 
@@ -32,48 +29,11 @@ public class App implements RequestHandler<Object, Object> {
         try {
             final String pageContents = this.getPageContents("https://raw.githubusercontent.com/theofidry/ephemeris/master/src/ephemeris.json");
             ListeGlobale listeGlobale = genson.deserialize(pageContents, ListeGlobale.class);
-            System.out.println(listeGlobale.getApril().get(0).get(0));
-            //switch
             Integer moisNum = month();
-            List<List<String>> liste;
-            switch (moisNum){
-                case 0 :
-                    liste = listeGlobale.getJanuary();
-                    break;
-                case 1 :
-                    liste = listeGlobale.getFebruary();
-                    break;
-                case 2 :
-                    liste = listeGlobale.getMarch();
-                    break;
-                case 3 :
-                    liste = listeGlobale.getApril();
-                    break;
-                case 4 :
-                    liste = listeGlobale.getMay();
-                    break;
-                case 5 :
-                    liste = listeGlobale.getJune();
-                    break;
-                case 6 :
-                    liste = listeGlobale.getJuly();
-                    break;
-                case 7 :
-                    liste = listeGlobale.getAugust();
-                    break;
-                case 8 :
-                    liste = listeGlobale.getSeptember();
-                    break;
-                case 9 :
-                    liste = listeGlobale.getOctober();
-                    break;
-                case 10 :
-                    liste = listeGlobale.getNovember();
-                    break;
-                case 11 :
-                    liste = listeGlobale.getDecember();
-                    break;
-            }
+            List<List<String>> liste = listSwitch(moisNum, listeGlobale);
+            List<String> fete = liste.get(dayMonth()-1);
+            String nomFete = fete.get(1)+" "+fete.get(0);
+            Ephemeride ephemeride = new Ephemeride(date.toString(), nomFete, dayYear(), 365-dayYear(), week());
             return ephemeride;
         } catch (IOException e) {
             return new GatewayResponse("{}", headers, 500);
@@ -112,5 +72,60 @@ public class App implements RequestHandler<Object, Object> {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         return cal.get(Calendar.WEEK_OF_YEAR);
+    }
+
+    public Integer dayMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public Integer dayYear() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.DAY_OF_YEAR);
+    }
+
+    public List<List<String>> listSwitch(int moisNum, ListeGlobale listeGlobale){
+        List<List<String>> liste;
+        switch (moisNum){
+            case 0 :
+                liste = listeGlobale.getJanuary();
+                return liste;
+            case 1 :
+                liste = listeGlobale.getFebruary();
+                return liste;
+            case 2 :
+                liste = listeGlobale.getMarch();
+                return liste;
+            case 3 :
+                liste = listeGlobale.getApril();
+                return liste;
+            case 4 :
+                liste = listeGlobale.getMay();
+                return liste;
+            case 5 :
+                liste = listeGlobale.getJune();
+                return liste;
+            case 6 :
+                liste = listeGlobale.getJuly();
+                return liste;
+            case 7 :
+                liste = listeGlobale.getAugust();
+                return liste;
+            case 8 :
+                liste = listeGlobale.getSeptember();
+                return liste;
+            case 9 :
+                liste = listeGlobale.getOctober();
+                return liste;
+            case 10 :
+                liste = listeGlobale.getNovember();
+                return liste;
+            case 11 :
+                liste = listeGlobale.getDecember();
+                return liste;
+        }
+        return null;
     }
 }

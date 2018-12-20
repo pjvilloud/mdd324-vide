@@ -1,16 +1,24 @@
 package helloworld;
 
-import java.util.Date;
-import java.util.Objects;
+import org.json.JSONObject;
 
 public class Citation {
 
-    private String quote;
-    private String author;
+    private String quote="";
+    private String author="";
 
-    public Citation(String quote, String author) {
-        this.quote = quote;
-        this.author = author;
+    public String createCitation(JSONObject json){
+        this.quote = json.getJSONObject("contents").getJSONArray("quotes").getJSONObject(0).get("quote").toString();
+        this.author = json.getJSONObject("contents").getJSONArray("quotes").getJSONObject(0).get("author").toString();
+        String result = "{\n \"author\": \""+ this.author +"\" ,\n \"quote\" : \"" + this.quote + " \" \n}";
+        return result;
+
+
+    }
+
+    public Citation(JSONObject json) {
+        this.quote = json.getJSONObject("contents").getJSONArray("quotes").getJSONObject(0).get("quote").toString();
+        this.author = json.getJSONObject("contents").getJSONArray("quotes").getJSONObject(0).get("author").toString();
     }
 
     public String getQuote() {
@@ -30,24 +38,10 @@ public class Citation {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Citation citation = (Citation) o;
-        return quote.equals(citation.quote) &&
-                author.equals(citation.author);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(quote, author);
-    }
-
-    @Override
     public String toString() {
-        return "Citation{" +
-                "quote='" + quote + '\'' +
-                ", author='" + author + '\'' +
-                '}';
+        return "{\n" +
+                "\"author\" : \"" + author + "\"" +
+                ",\n\"quote\" : \"" + quote + "\"" +
+                "\n}";
     }
 }

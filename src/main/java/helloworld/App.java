@@ -1,16 +1,16 @@
 package helloworld;
 
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
-
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
-import org.json.JSONObject;
 
 /**
  * Handler for requests to Lambda function.
@@ -21,14 +21,23 @@ public class App implements RequestHandler<Object, Object> {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
+        JSONObject json = null;
+        try {
+            json= TestContent.readJsonFromUrl("https://raw.githubusercontent.com/pjvilloud/mdd324-vide/master/qod.json");
+            //json = TestContent.readJsonFromUrl("http://quotes.rest/qod.json");
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        Citation dayQuote = new Citation(json);
+        //System.out.println("quote : " + json.getJSONObject("contents").getJSONArray("quotes").getJSONObject(0).get("quote"));
+        //System.out.println("author : "+ json.getJSONObject("contents").getJSONArray("quotes").getJSONObject(0).get("author"));
+        //System.out.println(dayQuote.toString());
 
         try {
-            final String pageContents = this.getPageContents("https://checkip.amazonaws.com");
-            String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);
-            return new GatewayResponse(output, headers, 200);
-        } catch (IOException e) {
+            return dayQuote;
+        } catch (Exception e) {
             return new GatewayResponse("{}", headers, 500);
         }
     }
@@ -51,3 +60,5 @@ public class App implements RequestHandler<Object, Object> {
         return lines.toString();
     }
 }
+
+

@@ -28,7 +28,8 @@ public class App implements RequestHandler<Object, Object> {
             URL url = new URL( "http://rss.allocine.fr/ac/cine/cettesemaine?format=xml" );
             Rss rss = (Rss) jaxbUnmarshaller.unmarshal( url );
             List<Film> films = parseFilms(rss);
-            return films;
+            Response response = new Response(films);
+            return response;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return new GatewayResponse("{}", headers, 500);

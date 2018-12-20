@@ -9,6 +9,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -28,6 +31,8 @@ public class App implements RequestHandler<Object, Object> {
         try {
             final String pageContents = this.getPageContents("https://raw.githubusercontent.com/theofidry/ephemeris/master/src/ephemeris.json");
             ListeGlobale listeGlobale = genson.deserialize(pageContents, ListeGlobale.class);
+            System.out.println(listeGlobale.getApril().get(0).get(0));
+            String date = aujourdhui();
             String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);
             return new GatewayResponse(output, headers, 200);
         } catch (IOException e) {
@@ -51,5 +56,11 @@ public class App implements RequestHandler<Object, Object> {
             }
         }
         return lines.toString();
+    }
+
+    public String aujourdhui() {
+        Long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        return new SimpleDateFormat("dd-MM-yyyy").format(date);
     }
 }

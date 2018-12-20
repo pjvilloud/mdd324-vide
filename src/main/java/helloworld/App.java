@@ -10,6 +10,7 @@ import java.util.StringJoiner;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import org.json.JSONObject;
 
 /**
  * Handler for requests to Lambda function.
@@ -20,6 +21,9 @@ public class App implements RequestHandler<Object, Object> {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
+
+
+
         try {
             final String pageContents = this.getPageContents("https://checkip.amazonaws.com");
             String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);

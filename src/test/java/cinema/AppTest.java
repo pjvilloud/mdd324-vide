@@ -30,6 +30,7 @@ public class AppTest {
     Assert.assertNotNull("No channel found",rss.getChannel());
     Assert.assertNotNull( "No film List found",rss.getChannel().getItems());
     Assert.assertNotNull("No film in list",rss.getChannel().getItems().get(0));
+    Assert.assertEquals(cinema.Item.class, rss.getChannel().getItems().get(0).getClass());
   }
 
   @Test

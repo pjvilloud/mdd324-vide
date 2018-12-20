@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * Handler for requests to Lambda function.
@@ -57,6 +58,8 @@ public class App implements RequestHandler<Object, Object> {
         Channel channel = rss.getChannel();
         List<Film> films = new ArrayList<>();
         List<Item> items = channel.getItems();
+
+        //Pattern dureePattern = Pattern.compile("\(\d+hd+\min\)");
 
         for(Item i : items) {
             String description;

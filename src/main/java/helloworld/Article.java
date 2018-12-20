@@ -56,8 +56,7 @@ public class Article
         return "ClassPojo [pubDate = "+pubDate+", title = "+title+", description = "+description+", link = "+link+"]";
     }
 
-    public Article(String pubDate) {
-        this.pubDate = pubDate;
+    public Article() {
     }
 
     public Article(String pubDate, String title, String description, String link) {

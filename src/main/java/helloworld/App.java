@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -26,10 +24,19 @@ public class App implements RequestHandler<Object, Object> {
             final String pageContents = this.getPageContents("https://www.lemonde.fr/rss/une.xml");
             JSONObject xmlJSONObj = XML.toJSONObject(pageContents);
             String jsonPrettyPrintString = xmlJSONObj.toString(4);
-            System.out.println(xmlJSONObj.getJSONObject("rss").getJSONObject("channel").getJSONObject("image"));
-            /*System.out.println(jsonPrettyPrintString);*/
-            String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);
-            return new GatewayResponse(output, headers, 200);
+            List<Article> list = new ArrayList<>();
+            for(int i=0; i<=9; i++){
+                Article a = new Article();
+                a.setLink(xmlJSONObj.getJSONObject("rss").getJSONObject("channel").getJSONArray("item").getJSONObject(i).getString("link"));
+                a.setTitle(xmlJSONObj.getJSONObject("rss").getJSONObject("channel").getJSONArray("item").getJSONObject(i).getString("title"));
+                a.setDescription(xmlJSONObj.getJSONObject("rss").getJSONObject("channel").getJSONArray("item").getJSONObject(i).getString("description"));
+                a.setPubDate(xmlJSONObj.getJSONObject("rss").getJSONObject("channel").getJSONArray("item").getJSONObject(i).getString("pubDate"));
+                list.add(a);
+            }
+            /*System.out.println(jsonPrettyPrintString);
+            String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);*/
+            System.out.println(list);
+            return list;
         } catch (IOException e) {
             return new GatewayResponse("{}", headers, 500);
         }

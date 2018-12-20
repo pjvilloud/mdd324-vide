@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -33,7 +34,9 @@ public class App implements RequestHandler<Object, Object> {
             List<List<String>> liste = listSwitch(moisNum, listeGlobale);
             List<String> fete = liste.get(dayMonth()-1);
             String nomFete = fete.get(1)+" "+fete.get(0);
-            Ephemeride ephemeride = new Ephemeride(date.toString(), nomFete, dayYear(), 365-dayYear(), week());
+            SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM y", Locale.FRENCH);
+            String dateFormatee = sdf.format(date);
+            Ephemeride ephemeride = new Ephemeride(dateFormatee, nomFete, dayYear(), 365-dayYear(), week());
             return ephemeride;
         } catch (IOException e) {
             return new GatewayResponse("{}", headers, 500);

@@ -1,6 +1,16 @@
 package cinema;
 
+import java.util.List;
+
 public class Channel {
 
-    private String title;
+    private List<Item> items;
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 }

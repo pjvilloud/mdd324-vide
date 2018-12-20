@@ -21,17 +21,28 @@ public class App implements RequestHandler<Object, Object> {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
-        JAXBContext jaxbContext;
+
+        Rss rss = parseRssFromUrl( "http://rss.allocine.fr/ac/cine/cettesemaine?format=xml" );
+
+        List<Film> films = parseFilms(rss);
+
+        return films;
+
+    }
+
+    public Rss parseRssFromUrl( URL url ) {
         try {
+            JAXBContext jaxbContext;
             jaxbContext = JAXBContext.newInstance(Rss.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            URL url = new URL( "http://rss.allocine.fr/ac/cine/cettesemaine?format=xml" );
             Rss rss = (Rss) jaxbUnmarshaller.unmarshal( url );
-            List<Film> films = parseFilms(rss);
-            return films;
+
+            return rss;
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return new GatewayResponse("{}", headers, 500);
+            e.printStackTrace();
+            return null;
         }
     }
 

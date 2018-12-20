@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,18 @@ public class AppTest {
   public void successfulResponse() {
     App app = new App();
     List<Film> result = (List<Film>) app.handleRequest(null, null);
+  }
+
+  @Test
+  public void rssParsedFromUrl() throws MalformedURLException {
+    App app = new App();
+
+    Rss rss = app.parseRssFromUrl(new URL("http://rss.allocine.fr/ac/cine/cettesemaine?format=xml"));
+
+    Assert.assertNotNull("No RSS found", rss);
+    Assert.assertNotNull("No channel found",rss.getChannel());
+    Assert.assertNotNull( "No film List found",rss.getChannel().getItems());
+    Assert.assertNotNull("No film in list",rss.getChannel().getItems().get(0));
   }
 
   @Test

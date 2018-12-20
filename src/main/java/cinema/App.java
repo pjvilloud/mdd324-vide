@@ -9,6 +9,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
@@ -21,18 +22,34 @@ public class App implements RequestHandler<Object, Object> {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
-        JAXBContext jaxbContext;
+
+        Rss rss = null;
+
         try {
+            rss = parseRssFromUrl( new URL("http://rss.allocine.fr/ac/cine/cettesemaine?format=xml") );
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        List<Film> films = parseFilms(rss);
+
+        return films;
+
+    }
+
+    public Rss parseRssFromUrl( URL url ) {
+        try {
+            JAXBContext jaxbContext;
             jaxbContext = JAXBContext.newInstance(Rss.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            URL url = new URL( "http://rss.allocine.fr/ac/cine/cettesemaine?format=xml" );
             Rss rss = (Rss) jaxbUnmarshaller.unmarshal( url );
-            List<Film> films = parseFilms(rss);
-            Response response = new Response(films);
-            return response;
+
+            return rss;
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return new GatewayResponse("{}", headers, 500);
+            e.printStackTrace();
+            return null;
         }
     }
 

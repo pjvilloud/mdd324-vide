@@ -1,6 +1,8 @@
 package cinema;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -19,5 +21,12 @@ public class Channel implements Serializable{
 
     public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return "Channel{" +
+                "items=" + items +
+                '}';
     }
 }

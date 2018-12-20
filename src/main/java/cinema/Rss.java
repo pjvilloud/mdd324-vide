@@ -23,7 +23,7 @@ public class Rss implements Serializable{
     @Override
     public String toString() {
         return "Rss{" +
-                "channel=" + channel +
+                "channel=" + channel.toString() +
                 '}';
     }
 }

@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
@@ -27,13 +28,20 @@ public class App implements RequestHandler<Object, Object> {
         try {
             jaxbContext = JAXBContext.newInstance(Rss.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            URL url = new URL( "http://localhost:8080/employee.xml" );
+            URL url = new URL( "http://rss.allocine.fr/ac/cine/cettesemaine?format=xml" );
             Rss rss = (Rss) jaxbUnmarshaller.unmarshal( url );
-            System.out.println(rss.toString());
-            //String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }");
-            //return new GatewayResponse(output, headers, 200);
+            String output = parseFilms(rss);
+            return output;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new GatewayResponse("{}", headers, 500);
         }
+    }
+
+    public String parseFilms(Rss rss){
+        Channel channel = rss.getChannel();
+        List<Film> films;
+        List<Item> items = channel.getItems();
+        return rss.toString();
     }
 }

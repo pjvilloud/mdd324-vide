@@ -66,8 +66,9 @@ public class App implements RequestHandler<Object, Object> {
             String tempDescription = i.getDescription();
             String[] temp = tempDescription.split(" - ");
             description = temp[1] + temp[2];
-            temp = temp[0].split(" ");
-            categorie = temp[0].split(";")[2];
+            temp = temp[0].split(Pattern.quote("("));
+            String[] tempCategorie = temp[0].split(";");
+            categorie = tempCategorie[2];
             duree = temp[1].substring(1, 9);
             films.add(new Film(i.getTitle(), description, categorie, duree));
         }

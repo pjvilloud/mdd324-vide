@@ -1,8 +1,15 @@
 package cinema;
 
+import java.io.Serializable;
 import java.util.List;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
-public class Channel {
+@XmlRootElement(name = "channel")
+@XmlAccessorType(XmlAccessType.PROPERTY)
+public class Channel implements Serializable{
 
     private List<Item> items;
 

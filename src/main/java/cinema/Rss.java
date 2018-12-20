@@ -19,4 +19,11 @@ public class Rss implements Serializable{
     public void setChannel(Channel channel) {
         this.channel = channel;
     }
+
+    @Override
+    public String toString() {
+        return "Rss{" +
+                "channel=" + channel +
+                '}';
+    }
 }

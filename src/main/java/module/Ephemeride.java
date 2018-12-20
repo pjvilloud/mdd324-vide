@@ -7,6 +7,18 @@ public class Ephemeride {
     private Integer joursRestants;
     private Integer numSemaines;
 
+    public Ephemeride(){
+
+    }
+
+    public Ephemeride(String dateJour, String feteJour, Integer jourAnnee, Integer joursRestants, Integer numSemaines){
+        this.dateJour = dateJour;
+        this.feteJour = feteJour;
+        this.jourAnnee = jourAnnee;
+        this.joursRestants = joursRestants;
+        this.numSemaines = numSemaines;
+    }
+
     public String getDateJour() {
         return dateJour;
     }

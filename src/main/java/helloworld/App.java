@@ -3,6 +3,7 @@ package helloworld;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.owlike.genson.Genson;
+import module.Ephemeride;
 import module.ListeGlobale;
 
 import java.io.BufferedReader;
@@ -11,10 +12,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
 /**
  * Handler for requests to Lambda function.
@@ -22,7 +20,10 @@ import java.util.StringJoiner;
 
 public class App implements RequestHandler<Object, Object> {
 
-    public Genson genson = new Genson();
+    private Genson genson = new Genson();
+    private Ephemeride ephemeride = new Ephemeride();
+    private Date date = new Date(); // your date
+
 
     public Object handleRequest(final Object input, final Context context) {
         Map<String, String> headers = new HashMap<>();
@@ -32,7 +33,7 @@ public class App implements RequestHandler<Object, Object> {
             final String pageContents = this.getPageContents("https://raw.githubusercontent.com/theofidry/ephemeris/master/src/ephemeris.json");
             ListeGlobale listeGlobale = genson.deserialize(pageContents, ListeGlobale.class);
             System.out.println(listeGlobale.getApril().get(0).get(0));
-            String date = aujourdhui();
+            //switch
             String output = String.format("{ \"message\": \"hello world\", \"location\": \"%s\" }", pageContents);
             return new GatewayResponse(output, headers, 200);
         } catch (IOException e) {
@@ -58,9 +59,19 @@ public class App implements RequestHandler<Object, Object> {
         return lines.toString();
     }
 
-    public String aujourdhui() {
-        Long millis = System.currentTimeMillis();
-        Date date = new Date(millis);
-        return new SimpleDateFormat("dd-MM-yyyy").format(date);
+    public int year() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.YEAR);
+    }
+    public Integer month() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.MONTH);
+    }
+    public Integer week() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.WEEK_OF_YEAR);
     }
 }

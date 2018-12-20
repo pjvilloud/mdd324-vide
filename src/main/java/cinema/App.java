@@ -59,8 +59,6 @@ public class App implements RequestHandler<Object, Object> {
         List<Film> films = new ArrayList<>();
         List<Item> items = channel.getItems();
 
-        //Pattern dureePattern = Pattern.compile("\(\d+hd+\min\)");
-
         for(Item i : items) {
             String description;
             String duree;

@@ -14,6 +14,7 @@ public class Channel implements Serializable{
     @XmlElement(name ="item")
     private List<Item> items;
 
+    @XmlTransient
     public List<Item> getItems() {
         return items;
     }

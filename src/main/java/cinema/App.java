@@ -59,7 +59,7 @@ public class App implements RequestHandler<Object, Object> {
         List<Film> films = new ArrayList<>();
         List<Item> items = channel.getItems();
 
-        for(Item i : items) {
+        /*for(Item i : items) {
             String description;
             String duree;
             String categorie;
@@ -71,7 +71,25 @@ public class App implements RequestHandler<Object, Object> {
             categorie = tempCategorie[2].trim();
             duree = temp[1].substring(0, 8);
             films.add(new Film(i.getTitle(), description, categorie, duree));
+        }*/
+
+        for(Item i : items) {
+            String description;
+            String duree;
+            String categorie;
+            String tempDescription = i.getDescription();
+            String[] temp = tempDescription.split(" - ");
+            if(temp.length==3){
+                description = temp[1] + temp[2];
+            }else{
+                description = temp[1];
+            }
+            temp = temp[0].split(Pattern.quote("("));
+            categorie = temp[0].split(">")[1];
+            duree = temp[1].substring(0, 8);
+            films.add(new Film(i.getTitle(), description, categorie, duree));
         }
+
 
         return films;
     }

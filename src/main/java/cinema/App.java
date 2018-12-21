@@ -33,8 +33,9 @@ public class App implements RequestHandler<Object, Object> {
         }
 
         List<Film> films = parseFilms(rss);
+        Response response = new Response(films);
 
-        return films;
+        return response;
 
     }
 

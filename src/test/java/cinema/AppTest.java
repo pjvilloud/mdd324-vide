@@ -18,6 +18,7 @@ public class AppTest {
   public void successfulResponse() {
     App app = new App();
     List<Film> result = (List<Film>) app.handleRequest(null, null);
+    Assert.assertTrue(result != null);
   }
 
   @Test

@@ -79,12 +79,13 @@ public class App implements RequestHandler<Object, Object> {
             String categorie;
             String tempDescription = i.getDescription();
             String[] temp = tempDescription.split(" - ");
+            String balise = "<p>";
             if(temp.length==3){
-                description = temp[1] + temp[2];
+                description = balise + temp[1] + temp[2];
             }else{
-                description = temp[1];
+                description = balise + temp[1];
             }
-            temp = temp[0].split(Pattern.quote("("));
+            temp = temp[0].split(Pattern.quote(" ("));
             categorie = temp[0].split(">")[1];
             duree = temp[1].substring(0, 8);
             films.add(new Film(i.getTitle(), description, categorie, duree));

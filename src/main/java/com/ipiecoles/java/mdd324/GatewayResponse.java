@@ -1,4 +1,4 @@
-package com.ipiecoles.java.mdd324.homepage;
+package com.ipiecoles.java.mdd324;
 
 import java.util.Collections;
 import java.util.HashMap;

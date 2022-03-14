@@ -1,4 +1,4 @@
-package com.ipiecoles.java.mdd324.homepage.utils;
+package com.ipiecoles.java.mdd324.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

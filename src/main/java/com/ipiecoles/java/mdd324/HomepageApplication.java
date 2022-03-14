@@ -1,4 +1,4 @@
-package com.ipiecoles.java.mdd324.homepage;
+package com.ipiecoles.java.mdd324;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
